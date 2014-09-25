@@ -1,9 +1,10 @@
-package edu.purdue.cs.range.spout;
+package edu.purdue.cs.generator.spout;
 
 import java.util.Map;
 import java.util.Random;
 
-import edu.purdue.cs.range.Constants;
+import edu.cs.purdue.edu.helpers.Constants;
+
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -27,6 +28,7 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 		System.out.println("FAIL:" + msgId);
 	}
 
+	@Override
 	public void nextTuple() {
 		while (true) {
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);

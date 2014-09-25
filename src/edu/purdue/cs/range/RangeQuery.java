@@ -2,6 +2,8 @@ package edu.purdue.cs.range;
 
 import java.util.HashSet;
 
+import edu.cs.purdue.edu.helpers.LocationUpdate;
+
 public class RangeQuery {
 	private int queryID; 
 	private int xMin, yMin, xMax, yMax;
@@ -71,10 +73,10 @@ public class RangeQuery {
 		this.yMax = yMax;
 	}
 	
-	public boolean isInsideRange(int xCoord, int yCoord){
-		return (xCoord >= xMin && 
-					xCoord <= xMax &&
-					yCoord >= yMin &&
-					yCoord <= yMax);		
+	public boolean isInsideRange(LocationUpdate locationUpdate){
+		return (locationUpdate.getNewLocationXCoord() >= xMin && 
+					locationUpdate.getNewLocationXCoord() <= xMax &&
+					locationUpdate.getNewLocationYCoord() >= yMin &&
+					locationUpdate.getNewLocationYCoord() <= yMax);		
 	}
 }

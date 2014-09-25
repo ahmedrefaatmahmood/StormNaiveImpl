@@ -1,7 +1,8 @@
-package edu.purdue.cs.nonincremental.range.bolt;
+package edu.purdue.cs.range.bolt;
 
 import java.util.ArrayList;
 import java.util.Map;
+
 
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
@@ -10,7 +11,8 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
-import edu.purdue.cs.range.Constants;
+import edu.cs.purdue.edu.helpers.Constants;
+import edu.cs.purdue.edu.helpers.LocationUpdate;
 import edu.purdue.cs.range.RangeQuery;
 
 public class NonIncrementalRangeFilter extends BaseBasicBolt {
@@ -39,7 +41,8 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 			int objectXCoord = input.getIntegerByField(Constants.objectXCoordField);
 			int objectYCoord = input.getIntegerByField(Constants.objectYCoordField);
 
-			if (q.isInsideRange(objectXCoord, objectYCoord)) {
+			LocationUpdate locationUpdate = new LocationUpdate(objectId, objectXCoord, objectYCoord);
+			if (q.isInsideRange(locationUpdate)) {
 				System.out.println("Object " + objectId + " qualifies Query " + q.getQueryID());
 				System.out.println("    Object's coords: " + objectXCoord + ", " + objectYCoord);
 				System.out.println("    Queries's dimensions: xMin=" + q.getXMin() + ", yMin=" + q.getYMin() + ", xMax=" + q.getXMax() + ", " + q.getYMax());

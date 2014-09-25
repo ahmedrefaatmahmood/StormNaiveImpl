@@ -3,11 +3,11 @@ package edu.purdue.cs.range;
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
-import edu.purdue.cs.nonincremental.range.bolt.NonIncrementalRangeFilter;
-import edu.purdue.cs.range.spout.ObjectLocationGenerator;
-import edu.purdue.cs.range.spout.QueryGenerator;
+import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
+import edu.purdue.cs.generator.spout.RangeQueryGenerator;
+import edu.purdue.cs.range.bolt.NonIncrementalRangeFilter;
 
-public class TobologySubmitter {
+public class TopologySubmitter {
 
 
 
@@ -17,7 +17,7 @@ public class TobologySubmitter {
          
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout("data-generator",new ObjectLocationGenerator());
-		builder.setSpout("query-generator",new QueryGenerator());
+		builder.setSpout("query-generator",new RangeQueryGenerator());
 		builder.setBolt("range-filter", new NonIncrementalRangeFilter())
 			.allGrouping("query-generator").shuffleGrouping("data-generator");
 		

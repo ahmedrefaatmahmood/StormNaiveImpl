@@ -1,7 +1,9 @@
-package edu.purdue.cs.range.spout;
+package edu.purdue.cs.generator.spout;
 
 import java.util.Map;
 import java.util.Random;
+
+import edu.cs.purdue.edu.helpers.Constants;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -9,9 +11,8 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import edu.purdue.cs.range.Constants;
 
-public class QueryGenerator extends BaseRichSpout {
+public class KNNQueryGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
@@ -26,24 +27,17 @@ public class QueryGenerator extends BaseRichSpout {
 	public void fail(Object msgId) {
 		System.out.println("FAIL:" + msgId);
 	}
+	
+	@Override
 	public void nextTuple() {
-		// Generate queries at random
+		// Generate queries at random.
 		for (int i = 0; i < Constants.numQueries; i++) {  // i will be the query id.
-			int xMin = randomGenerator.nextInt(Constants.xMaxRange);
-			int yMin = randomGenerator.nextInt(Constants.yMaxRange);
+			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
+			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
 			
-			int width = randomGenerator.nextInt(Constants.queryMaxWidth);
-			int xMax = xMin + width;
-			if (xMax  > Constants.xMaxRange) {
-				xMax = Constants.xMaxRange;
-			}
-			int height = randomGenerator.nextInt(Constants.queryMaxHeight);
-			int yMax = yMin + height;
-			if (yMax > Constants.yMaxRange) {
-				yMax = Constants.yMaxRange;
-			}
+			int k = randomGenerator.nextInt(Constants.maxK) + 1;  // To avoid generating k = 0, we add 1; 
 			
-			this.collector.emit(new Values(i, xMin, yMin, xMax, yMax));
+			this.collector.emit(new Values(i, xCoord, yCoord, k));
 			
 			try {
 				Thread.sleep(Constants.queryGeneratorDelay);
@@ -61,9 +55,8 @@ public class QueryGenerator extends BaseRichSpout {
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields(Constants.queryIdField,
-												  Constants.queryXMinField,
-												  Constants.queryYMinField,
-												  Constants.queryXMaxField,
-												  Constants.queryYMaxField));
+												  Constants.focalXCoordField,
+												  Constants.focalYCoordField,
+												  Constants.kField));
 	}
 }
