@@ -3,50 +3,38 @@ package edu.purdue.cs.range.spout;
 import java.util.Map;
 import java.util.Random;
 
+import edu.purdue.cs.range.Constants;
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
-import edu.purdue.cs.range.Constants;
 
-public class QueryGenerator extends BaseRichSpout {
+public class ObjectLocationGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
 	private Random randomGenerator;
-	
+
 	public void ack(Object msgId) {
 		System.out.println("OK:" + msgId);
 	}
-	
+
 	public void close() {}
-	
+
 	public void fail(Object msgId) {
 		System.out.println("FAIL:" + msgId);
 	}
+
 	public void nextTuple() {
-		// Generate queries at random
-		for (int i = 0; i < Constants.numQueries; i++) {  // i will be the query id.
-			int xMin = randomGenerator.nextInt(Constants.xMaxRange);
-			int yMin = randomGenerator.nextInt(Constants.yMaxRange);
-			
-			int width = randomGenerator.nextInt(Constants.queryMaxWidth);
-			int xMax = xMin + width;
-			if (xMax  > Constants.xMaxRange) {
-				xMax = Constants.xMaxRange;
-			}
-			int height = randomGenerator.nextInt(Constants.queryMaxHeight);
-			int yMax = yMin + height;
-			if (yMax > Constants.yMaxRange) {
-				yMax = Constants.yMaxRange;
-			}
-			
-			this.collector.emit(new Values(i, xMin, yMin, xMax, yMax));
-			
+		while (true) {
+			int id = randomGenerator.nextInt(Constants.numMovingObjects);
+			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
+			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
+			this.collector.emit(new Values(id, xCoord, yCoord));
 			try {
-				Thread.sleep(Constants.queryGeneratorDelay);
+				Thread.sleep(Constants.dataGeneratorDelay);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -60,10 +48,8 @@ public class QueryGenerator extends BaseRichSpout {
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		declarer.declare(new Fields(Constants.queryIdField,
-												  Constants.queryXMinField,
-												  Constants.queryYMinField,
-												  Constants.queryXMaxField,
-												  Constants.queryYMaxField));
+		declarer.declare(new Fields(Constants.objectIdField,
+												  Constants.objectXCoordField,
+												  Constants.objectYCoordField));
 	}
 }
