@@ -37,9 +37,5 @@ public class Constants {
 	public static final String objectLocationGenerator = "object-location-generator";
 	public static final String queryGenerator = "query-generator";
 	public static final String rangeFilterBolt = "range-filter";
-
-	// Grid Constants
-	public static final int xCellsNum = 4;
-	public static final int yCellsNum = 4;
-	public static final int numberOfBolts = xCellsNum * yCellsNum;  //this will also be the number of GridCells in the spatial range query.
+	public static final String kNNFilterBolt = "kNN-filter";
 }

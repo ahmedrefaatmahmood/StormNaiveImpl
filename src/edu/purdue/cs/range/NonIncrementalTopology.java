@@ -8,10 +8,8 @@ import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
 import edu.purdue.cs.range.bolt.NonIncrementalRangeFilter;
 
-
 public class NonIncrementalTopology {
 	public static void main(String[] args) throws InterruptedException {
-         
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator());
@@ -27,7 +25,7 @@ public class NonIncrementalTopology {
 		conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
 
 		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("Range-Queries-toplogy", conf, builder.createTopology());
+		cluster.submitTopology("NonIncremental-Range-Queries-toplogy", conf, builder.createTopology());
 		while(true)
 			Thread.sleep(1000);		
 	}

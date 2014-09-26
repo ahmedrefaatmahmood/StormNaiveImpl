@@ -13,12 +13,11 @@ import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
 
 public class IncrementalTopology {
 	public static void main(String[] args) throws InterruptedException {
-         
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator());
 		builder.setSpout(Constants.queryGenerator, new KNNQueryGenerator());
-		builder.setBolt(Constants.rangeFilterBolt,
+		builder.setBolt(Constants.kNNFilterBolt,
 							  new IncrementalKNNFilter()).allGrouping(Constants.queryGenerator).shuffleGrouping(Constants.objectLocationGenerator);
 		
         //Configuration
@@ -29,7 +28,7 @@ public class IncrementalTopology {
 		conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
 
 		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("Incremental-Range-Queries-toplogy", conf, builder.createTopology());
+		cluster.submitTopology("Incremental-kNN-Queries-Toplogy", conf, builder.createTopology());
 		while(true)
 			Thread.sleep(1000);		
 	}
