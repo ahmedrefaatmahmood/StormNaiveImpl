@@ -8,10 +8,8 @@ import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
 import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
 
-
 public class IncrementalTopology {
 	public static void main(String[] args) throws InterruptedException {
-         
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator());
@@ -27,7 +25,7 @@ public class IncrementalTopology {
 		conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
 
 		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("Incremental-Range-Queries-toplogy", conf, builder.createTopology());
+		cluster.submitTopology("Incremental-Range-Queries-Toplogy", conf, builder.createTopology());
 		while(true)
 			Thread.sleep(1000);		
 	}
