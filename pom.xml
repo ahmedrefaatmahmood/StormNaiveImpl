@@ -5,6 +5,7 @@
 	<artifactId>StormTestNaieve</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
+		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -16,6 +17,28 @@
 					<compilerVersion>1.6</compilerVersion>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass></mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -26,7 +49,10 @@
 			<id>clojars.org</id>
 			<url>http://clojars.org/repo</url>
 		</repository>
-
+		<repository>
+			<id>github-releases</id>
+			<url>http://oss.sonatype.org/content/repositories/github-releases/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -37,7 +63,18 @@
 			<artifactId>storm-core</artifactId>
 			<version>0.9.2-incubating</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
 
+		<dependency>
+			<groupId>args4j</groupId>
+			<version>2.0.16</version>
+			<artifactId>args4j</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -28,7 +28,7 @@ public class KNNQueryGenerator extends BaseRichSpout {
 		System.out.println("FAIL:" + msgId);
 	}
 	
-	@Override
+	
 	public void nextTuple() {
 		// Generate queries at random.
 		for (int i = 0; i < Constants.numQueries; i++) {  // i will be the query id.
@@ -40,7 +40,8 @@ public class KNNQueryGenerator extends BaseRichSpout {
 			this.collector.emit(new Values(i, xCoord, yCoord, k));
 			
 			try {
-				Thread.sleep(Constants.queryGeneratorDelay);
+				if(Constants.queryGeneratorDelay!=0)
+					Thread.sleep(Constants.queryGeneratorDelay);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

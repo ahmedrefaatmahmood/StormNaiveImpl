@@ -26,7 +26,6 @@ public class NonIncrementalTopology {
 
 		LocalCluster cluster = new LocalCluster();
 		cluster.submitTopology("NonIncremental-Range-Queries-toplogy", conf, builder.createTopology());
-		while(true)
-			Thread.sleep(1000);		
+	
 	}
 }

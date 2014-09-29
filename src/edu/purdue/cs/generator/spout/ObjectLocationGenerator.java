@@ -22,13 +22,13 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 		System.out.println("OK:" + msgId);
 	}
 
-	public void close() {}
+	public void close() {
+	}
 
 	public void fail(Object msgId) {
 		System.out.println("FAIL:" + msgId);
 	}
 
-	@Override
 	public void nextTuple() {
 		while (true) {
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
@@ -36,7 +36,8 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
 			this.collector.emit(new Values(id, xCoord, yCoord));
 			try {
-				Thread.sleep(Constants.dataGeneratorDelay);
+				if (Constants.dataGeneratorDelay != 0)
+					Thread.sleep(Constants.dataGeneratorDelay);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -51,7 +52,6 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields(Constants.objectIdField,
-												  Constants.objectXCoordField,
-												  Constants.objectYCoordField));
+				Constants.objectXCoordField, Constants.objectYCoordField));
 	}
 }
