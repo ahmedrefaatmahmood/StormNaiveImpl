@@ -20,8 +20,13 @@ public class Constants {
 	public static final String objectIdField = "objectID";
 	public static final String objectXCoordField = "xCoord";
 	public static final String objectYCoordField = "yCoord";
+	public static final String objectTextField = "textContent";
 
 	public static final String queryIdField = "queryID";
+	
+	//Text Query field
+	public static final String queryTextField ="queryText";
+	
 	// Range Query fields
 	public static final String queryXMinField = "xMin";
 	public static final String queryYMinField = "yMin";
@@ -38,6 +43,9 @@ public class Constants {
 	public static final String queryGenerator = "query-generator";
 	public static final String rangeFilterBolt = "range-filter";
 	public static final String kNNFilterBolt = "kNN-filter";
+	public static final String dummyTweetGenerator = "dummy-tweet-generator";
+	public static final String dummyTextQueryGenerator = "dummy-text-query-generator";
+	public static final String textFilterBolt= "text-filter-bolt";
 	
 	// Cluster constants
 	public static final String mcMachinesNimbus = "mc07.cs.purdue.edu";
