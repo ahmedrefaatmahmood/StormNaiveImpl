@@ -32,7 +32,7 @@ public class DummyTweetGenerator extends BaseRichSpout {
 
 	@Override
 	public void nextTuple() {
-		while (true) {
+		
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
 			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
 			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
@@ -44,7 +44,7 @@ public class DummyTweetGenerator extends BaseRichSpout {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		
 	}
 	
 	

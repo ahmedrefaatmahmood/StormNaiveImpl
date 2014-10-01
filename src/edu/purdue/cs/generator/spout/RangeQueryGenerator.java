@@ -17,13 +17,14 @@ public class RangeQueryGenerator extends BaseRichSpout {
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
 	private Random randomGenerator;
-
+	int i;
 	
 	
 	public void nextTuple() {
 		// Generate queries at random
-		for (int i = 0; i < Constants.numQueries; i++) { // i will be the query
+		if( i < Constants.numQueries) { // i will be the query
 															// id.
+			i++;
 			int xMin = randomGenerator.nextInt(Constants.xMaxRange);
 			int yMin = randomGenerator.nextInt(Constants.yMaxRange);
 
@@ -52,6 +53,7 @@ public class RangeQueryGenerator extends BaseRichSpout {
 
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
+		i=0;
 		this.collector = collector;
 		randomGenerator = new Random(Constants.generatorSeed);
 	}
