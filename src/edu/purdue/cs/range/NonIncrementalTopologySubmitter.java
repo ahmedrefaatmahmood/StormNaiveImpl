@@ -4,8 +4,10 @@ import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import edu.cs.purdue.edu.helpers.Constants;
+import edu.cs.purdue.edu.helpers.KillTopology;
 import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
+import edu.purdue.cs.performance.ClusterInformationExtractor;
 import edu.purdue.cs.range.bolt.NonIncrementalRangeFilter;
 
 public class NonIncrementalTopologySubmitter {
@@ -23,6 +25,9 @@ public class NonIncrementalTopologySubmitter {
 							  new NonIncrementalRangeFilter(),Constants.boltParallelism).allGrouping(Constants.queryGenerator).shuffleGrouping(Constants.objectLocationGenerator);
 		
 		//Configuration
+		String topologyName= "Non-IncrementalRange-Queries_toplogy";
+		System.out.println("******************************************************************************************************");
+		System.out.println(topologyName);
 		Config conf = new Config();
 		conf.setDebug(false);
         //Topology run
@@ -31,8 +36,11 @@ public class NonIncrementalTopologySubmitter {
 		conf.put(Config.NIMBUS_HOST, Constants.mcMachinesNimbus);
 		System.setProperty("storm.jar", "target/StormTestNaieve-0.0.1-SNAPSHOT.jar");
 		//LocalCluster cluster = new LocalCluster();
-		StormSubmitter.submitTopology("Non-IncrementalRange-Queries_toplogy", conf, builder.createTopology());
-		//Thread.sleep(1000);
-	//	cluster.shutdown();
+		
+		StormSubmitter.submitTopology(topologyName, conf, builder.createTopology());
+		Thread.sleep(1000 * 60 * Constants.minutesToGetSats);
+		ClusterInformationExtractor.main(null);
+		KillTopology.killToplogy(topologyName, Constants.mcMachinesNimbus);
+		System.out.println("******************************************************************************************************");
 	}
 }

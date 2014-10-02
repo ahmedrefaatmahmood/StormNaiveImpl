@@ -26,6 +26,7 @@ public class Constants {
 	public static final String objectXCoordField = "xCoord";
 	public static final String objectYCoordField = "yCoord";
 	public static final String objectTextField = "textContent";
+	public static final String incrementalState = "incrementalState";
 
 	public static final String queryIdField = "queryID";
 
@@ -51,24 +52,29 @@ public class Constants {
 	public static final String dummyTweetGenerator = "dummy-tweet-generator";
 	public static final String dummyTextQueryGenerator = "dummy-text-query-generator";
 	public static final String textFilterBolt = "text-filter-bolt";
+	
+	
+	// Grid Constants
+	public static final int xCellsNum =2;
+	public static final int yCellsNum =2;
+	public static final int numberOfBolts = xCellsNum * yCellsNum;
 
+	
 	// Cluster constants
 	public static final String mcMachinesNimbus = "mc07.cs.purdue.edu";
 	public static final String mcMachinesUI = "mc07.cs.purdue.edu";
 	public static final String localHostNimbus = "127.0.0.1";
 	public static final int dataSpoutParallelism = 2;
 	public static final int querySpoutParallelism = 1;
-	public static final int boltParallelism = 9;
+	public static final int boltParallelism =numberOfBolts;
 	public static final int numberOfWorkers = 10;
 
-	// Grid Constants
-	public static final int xCellsNum = 4;
-	public static final int yCellsNum = 4;
-	public static final int numberOfBolts = xCellsNum * yCellsNum;
+	
 	
 	
 	
 	
 	//Simulation constansts
 	public static final int minutesToGetSats = 2;
+	public static final boolean debug= false;
 }

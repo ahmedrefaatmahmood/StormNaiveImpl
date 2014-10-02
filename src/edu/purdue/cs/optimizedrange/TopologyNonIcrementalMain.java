@@ -15,19 +15,24 @@ public class TopologyNonIcrementalMain {
 
 		// Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
-		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator());
-		builder.setSpout(Constants.queryGenerator, new RangeQueryGenerator());
-		builder.setBolt(Constants.rangeFilterBolt, new NonIncrementalRangeFilter(),Constants.numberOfBolts)
+		builder.setSpout(Constants.objectLocationGenerator,
+				new ObjectLocationGenerator(), Constants.dataSpoutParallelism);
+		builder.setSpout(Constants.queryGenerator, new RangeQueryGenerator(),
+				Constants.querySpoutParallelism);
+		builder.setBolt(Constants.rangeFilterBolt,
+				new NonIncrementalRangeFilter(), Constants.boltParallelism)
 				.customGrouping(
 						Constants.queryGenerator,
-						 new QueryStaticGridCustomGrouping(
-								 Constants.numberOfBolts, Constants.xMaxRange,
-								 Constants.yMaxRange, Constants.xCellsNum,
-								 Constants.yCellsNum))
-				.customGrouping(Constants.objectLocationGenerator,new DataStaticGridCustomGrouping(
-						Constants.numberOfBolts, Constants.xMaxRange,
-						Constants.yMaxRange, Constants.xCellsNum,
-						Constants.yCellsNum));
+						new QueryStaticGridCustomGrouping(
+								Constants.numberOfBolts, Constants.xMaxRange,
+								Constants.yMaxRange, Constants.xCellsNum,
+								Constants.yCellsNum))
+				.customGrouping(
+						Constants.objectLocationGenerator,
+						new DataStaticGridCustomGrouping(
+								Constants.numberOfBolts, Constants.xMaxRange,
+								Constants.yMaxRange, Constants.xCellsNum,
+								Constants.yCellsNum));
 
 		// Configuration
 		Config conf = new Config();
