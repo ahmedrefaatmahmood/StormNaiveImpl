@@ -12,7 +12,13 @@ public class KNNQuery {
 	private int focalXCoord, focalYCoord;
 	private int k;
 	
-	PriorityQueue<LocationUpdate> kNNQueue;  // Priority queue (max-heap).
+	public void reset() {
+		Comparator<LocationUpdate> maxHeap = new MaxHeap(focalXCoord, focalYCoord);
+		this.kNNQueue = new PriorityQueue<LocationUpdate>(50, maxHeap);
+		this.currentRanks = new HashMap<Integer, Integer>();
+	}
+	
+	public PriorityQueue<LocationUpdate> kNNQueue;  // Priority queue (max-heap).
 	HashMap<Integer, Integer> currentRanks;  // Records the current rank of each object in the top-k list.
 		
 	// Retrieves the distance of the farthest object in the current top-k.
@@ -67,7 +73,7 @@ public class KNNQuery {
 	}
 	
 	// Returns a representation of the changes in the top-k list (if any).
-	public ArrayList<String> processLocationUpdate(LocationUpdate incomingUpdate) {
+	public ArrayList<String> processLocationUpdate(LocationUpdate incomingUpdate) {		
 		boolean topkMayHaveChanged = false;
 		// If the new location update corresponds to an object that is already in the top-k list.
 		if (this.currentRanks.containsKey(incomingUpdate.getObjectId())) {
@@ -101,23 +107,30 @@ public class KNNQuery {
 				}
 			}
 		}
+		
 		if (topkMayHaveChanged)
 			return getTopkUpdates();
 		else
-			return new ArrayList<String>();
+			return null;
 	}
 	
 	// Returns a string representation of the updates that happened to the top-k list, e.g., removal of an object, addition of
-	// and object, or the change of a rank of an object
+	// an object, or the change of a rank of an object
 	private ArrayList<String> getTopkUpdates() {
 		// Calculate the new rank of each object in the top-k list.
 		HashMap<Integer, Integer> newRanks = new HashMap<Integer, Integer>();
-		int rank = 1;
-		for (LocationUpdate l : this.kNNQueue) {
+		Comparator<LocationUpdate> maxHeap = new MaxHeap(focalXCoord, focalYCoord);
+		PriorityQueue<LocationUpdate> temp = new PriorityQueue<LocationUpdate>(50, maxHeap);
+		int rank = 1;		
+		while (!this.kNNQueue.isEmpty()) {
+			LocationUpdate l = this.kNNQueue.remove();
+			temp.add(l);
 			newRanks.put(l.getObjectId(), rank);
 			rank++;
 		}
+		this.kNNQueue = temp;
 
+		// Compute the change list.
 		ArrayList<String> changes = new ArrayList<String>();
 		// Compare the new ranks with the existing (i.e., old) ranks.
 		for (Integer objectId : newRanks.keySet()) {
@@ -157,9 +170,9 @@ public class KNNQuery {
 															  Math.pow((b.getNewLocationYCoord() - this.focalYCoord), 2));
 			
 			if (distanceOfA < distanceOfB)
-				return -1;
-			if (distanceOfA > distanceOfB)
 				return 1;
+			if (distanceOfA > distanceOfB)
+				return -1;
 
 			return 0;
 		}

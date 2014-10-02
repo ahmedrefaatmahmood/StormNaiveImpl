@@ -32,8 +32,8 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 	public void nextTuple() {
 		while (true) {
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
-			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
-			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
+			double xCoord = randomGenerator.nextInt(Constants.xMaxRange);
+			double yCoord = randomGenerator.nextInt(Constants.yMaxRange);
 			this.collector.emit(new Values(id, xCoord, yCoord));
 			try {
 				if (Constants.dataGeneratorDelay != 0)

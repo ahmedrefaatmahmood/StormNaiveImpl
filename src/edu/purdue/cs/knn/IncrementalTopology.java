@@ -10,7 +10,6 @@ import edu.purdue.cs.generator.spout.RangeQueryGenerator;
 import edu.purdue.cs.knn.bolt.IncrementalKNNFilter;
 import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
 
-
 public class IncrementalTopology {
 	public static void main(String[] args) throws InterruptedException {
         //Topology definition

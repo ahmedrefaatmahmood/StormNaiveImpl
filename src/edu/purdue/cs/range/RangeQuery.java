@@ -73,10 +73,10 @@ public class RangeQuery {
 		this.yMax = yMax;
 	}
 	
-	public boolean isInsideRange(LocationUpdate locationUpdate){
-		return (locationUpdate.getNewLocationXCoord() >= xMin && 
-					locationUpdate.getNewLocationXCoord() <= xMax &&
-					locationUpdate.getNewLocationYCoord() >= yMin &&
-					locationUpdate.getNewLocationYCoord() <= yMax);		
+	public boolean isInsideRange(LocationUpdate locationUpdate) {	
+		return ((locationUpdate.getNewLocationXCoord() >= this.xMin) && 
+					(locationUpdate.getNewLocationXCoord() <= this.xMax) &&
+					(locationUpdate.getNewLocationYCoord() >= this.yMin) &&
+					(locationUpdate.getNewLocationYCoord() <= this.yMax));
 	}
 }

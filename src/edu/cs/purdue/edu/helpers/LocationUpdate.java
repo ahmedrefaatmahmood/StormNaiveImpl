@@ -3,10 +3,10 @@ package edu.cs.purdue.edu.helpers;
 public class LocationUpdate {
 
 	private int objectId;
-	private int newLocationXCoord;
-	private int newLocationYCoord;
+	private double newLocationXCoord;
+	private double newLocationYCoord;
 	
-	public LocationUpdate(int objectId, int newLocationXCoord, int newLocationYCoord) {
+	public LocationUpdate(int objectId, double newLocationXCoord, double newLocationYCoord) {
 		this.objectId = objectId;
 		this.newLocationXCoord = newLocationXCoord;
 		this.newLocationYCoord = newLocationYCoord;
@@ -16,11 +16,11 @@ public class LocationUpdate {
 		return this.objectId;
 	}
 	
-	public int getNewLocationXCoord() {
+	public double getNewLocationXCoord() {
 		return this.newLocationXCoord;
 	}
 	
-	public int getNewLocationYCoord() {
+	public double getNewLocationYCoord() {
 		return this.newLocationYCoord;
 	}
 	
@@ -28,11 +28,11 @@ public class LocationUpdate {
 		this.objectId = id;
 	}
 	
-	public void setNewLocationXCoord(int newLocationXCoord) {
+	public void setNewLocationXCoord(double newLocationXCoord) {
 		this.newLocationXCoord = newLocationXCoord;
 	}
 	
-	public void setNewLocationYCoord(int newLocationYCoord) {
+	public void setNewLocationYCoord(double newLocationYCoord) {
 		this.newLocationYCoord = newLocationYCoord;
 	}
 }

@@ -38,8 +38,8 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 	void filterData(Tuple input, BasicOutputCollector collector) {
 		for (RangeQuery q : queryList) {
 			int objectId = input.getIntegerByField(Constants.objectIdField);
-			int objectXCoord = input.getIntegerByField(Constants.objectXCoordField);
-			int objectYCoord = input.getIntegerByField(Constants.objectYCoordField);
+			double objectXCoord = input.getDoubleByField(Constants.objectXCoordField);
+			double objectYCoord = input.getDoubleByField(Constants.objectYCoordField);
 
 			LocationUpdate locationUpdate = new LocationUpdate(objectId, objectXCoord, objectYCoord);
 			if (q.isInsideRange(locationUpdate)) {
