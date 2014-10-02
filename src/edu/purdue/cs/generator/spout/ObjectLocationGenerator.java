@@ -30,7 +30,7 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 	}
 
 	public void nextTuple() {
-		while (true) {
+	//	while (true) {
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
 			double xCoord = randomGenerator.nextInt(Constants.xMaxRange);
 			double yCoord = randomGenerator.nextInt(Constants.yMaxRange);
@@ -41,7 +41,7 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		//}
 	}
 
 	public void open(Map conf, TopologyContext context,

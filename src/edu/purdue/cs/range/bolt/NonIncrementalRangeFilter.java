@@ -3,7 +3,6 @@ package edu.purdue.cs.range.bolt;
 import java.util.ArrayList;
 import java.util.Map;
 
-
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -23,8 +22,9 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 	ArrayList<RangeQuery> queryList;
 
 	public void execute(Tuple input, BasicOutputCollector collector) {
-		if (Constants.objectLocationGenerator.equals(input.getSourceComponent())) {
-			filterData(input,collector);
+		if (Constants.objectLocationGenerator
+				.equals(input.getSourceComponent())) {
+			filterData(input, collector);
 		} else if (Constants.queryGenerator.equals(input.getSourceComponent())) {
 			addQuery(input);
 		}
@@ -38,21 +38,31 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 	void filterData(Tuple input, BasicOutputCollector collector) {
 		for (RangeQuery q : queryList) {
 			int objectId = input.getIntegerByField(Constants.objectIdField);
+
 			double objectXCoord = input.getDoubleByField(Constants.objectXCoordField);
 			double objectYCoord = input.getDoubleByField(Constants.objectYCoordField);
 
-			LocationUpdate locationUpdate = new LocationUpdate(objectId, objectXCoord, objectYCoord);
+			LocationUpdate locationUpdate = new LocationUpdate(objectId,
+					objectXCoord, objectYCoord);
 			if (q.isInsideRange(locationUpdate)) {
-				System.out.println("Object " + objectId + " qualifies Query " + q.getQueryID());
-				System.out.println("    Object's coords: " + objectXCoord + ", " + objectYCoord);
-				System.out.println("    Queries's dimensions: xMin=" + q.getXMin() + ", yMin=" + q.getYMin() + ", xMax=" + q.getXMax() + ", " + q.getYMax());
-				collector.emit(new Values(q.getQueryID(), objectId, objectXCoord, objectYCoord));													   
+				if (Constants.debug) {
+					System.out.println("Object " + objectId
+							+ " qualifies Query " + q.getQueryID());
+					System.out.println("    Object's coords: " + objectXCoord
+							+ ", " + objectYCoord);
+					System.out.println("    Queries's dimensions: xMin="
+							+ q.getXMin() + ", yMin=" + q.getYMin() + ", xMax="
+							+ q.getXMax() + ", " + q.getYMax());
+				}
+				collector.emit(new Values(q.getQueryID(), objectId,
+						objectXCoord, objectYCoord));
 			}
 		}
 	}
 
 	void addQuery(Tuple input) {
-		RangeQuery query = new RangeQuery(input.getIntegerByField(Constants.queryIdField),
+		RangeQuery query = new RangeQuery(
+				input.getIntegerByField(Constants.queryIdField),
 				input.getIntegerByField(Constants.queryXMinField),
 				input.getIntegerByField(Constants.queryYMinField),
 				input.getIntegerByField(Constants.queryXMaxField),
@@ -62,8 +72,7 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields(Constants.queryIdField,
-				Constants.objectIdField,
-				Constants.objectXCoordField,
+				Constants.objectIdField, Constants.objectXCoordField,
 				Constants.objectYCoordField));
 	}
 }
