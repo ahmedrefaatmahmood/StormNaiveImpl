@@ -54,6 +54,7 @@ public class Constants {
 	public static final String dummyTweetGenerator = "dummy-tweet-generator";
 	public static final String dummyTextQueryGenerator = "dummy-text-query-generator";
 	public static final String textFilterBolt = "text-filter-bolt";
+	public static final String tweeterPairIdentifierBolt = "tweeter-pair-identifier-bolt";
 	
 	
 	// Grid Constants
