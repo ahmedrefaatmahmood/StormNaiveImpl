@@ -230,6 +230,8 @@ public class ClusterInformationExtractor {
 								getBoltStatLongValueFromMap(boltStats.get_executed(), ":all-time"),
 								getBoltStatDoubleValueFromMap(boltStats.get_execute_ms_avg(),":all-time"),
 								getBoltStatDoubleValueFromMap(boltStats.get_process_ms_avg(),":all-time"));
+						
+						
 
 //						System.out.println("Bolt Id: " + componentId);
 //						System.out.print("Transferred: "

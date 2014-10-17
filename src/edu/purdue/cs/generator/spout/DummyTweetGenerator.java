@@ -10,12 +10,13 @@ import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import edu.cs.purdue.edu.helpers.Constants;
+import edu.cs.purdue.edu.helpers.RandomGenerator;
 
 public class DummyTweetGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
-	private Random randomGenerator;
+	private RandomGenerator randomGenerator;
 	int i = 0;
 	
 
@@ -34,8 +35,8 @@ public class DummyTweetGenerator extends BaseRichSpout {
 	public void nextTuple() {
 		
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
-			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
-			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
+			Double xCoord = randomGenerator.nextDouble(0,Constants.xMaxRange);
+			Double yCoord =randomGenerator.nextDouble(0,Constants.yMaxRange);
 			String textContent = "Purdue is Awesome!";
 			
 			this.collector.emit(new Values(id, xCoord, yCoord, textContent));
@@ -52,7 +53,7 @@ public class DummyTweetGenerator extends BaseRichSpout {
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
 		this.collector = collector;
-		randomGenerator = new Random(Constants.generatorSeed);
+		randomGenerator = new RandomGenerator(Constants.generatorSeed);
 	}
 
 
@@ -63,4 +64,5 @@ public class DummyTweetGenerator extends BaseRichSpout {
 								    Constants.objectYCoordField,
 								    Constants.objectTextField));
 	}
+	
 }

@@ -9,7 +9,7 @@ import edu.cs.purdue.edu.helpers.LocationUpdate;
 
 public class KNNQuery {
 	private int queryID;
-	private int focalXCoord, focalYCoord;
+	private double focalXCoord, focalYCoord;
 	private int k;
 	
 	public void reset() {
@@ -44,7 +44,7 @@ public class KNNQuery {
 		this.queryID = id;
 	}
 	
-	public int getFocalXCoord() {
+	public double getFocalXCoord() {
 		return this.focalXCoord;
 	}
 	
@@ -52,7 +52,7 @@ public class KNNQuery {
 		this.focalXCoord = focalXCoord;
 	}
 	
-	public int getFocalYCoord() {
+	public double getFocalYCoord() {
 		return this.focalYCoord;
 	}
 	
@@ -60,7 +60,7 @@ public class KNNQuery {
 		this.focalYCoord = focalYCoord;
 	}
 	
-	public KNNQuery(int id, int focalXCoord, int focalYCoord, int k) {
+	public KNNQuery(Integer id, Double focalXCoord, Double focalYCoord, Integer k) {
 		Comparator<LocationUpdate> maxHeap = new MaxHeap(focalXCoord, focalYCoord);
 		this.kNNQueue = new PriorityQueue<LocationUpdate>(50, maxHeap);
 		this.currentRanks = new HashMap<Integer, Integer>();
@@ -154,9 +154,9 @@ public class KNNQuery {
 	
 	// This is an internal class that is used to order the objects according to the Euclidean distance using a priority queue.
 	public static class MaxHeap implements Comparator<LocationUpdate>{
-		private int focalXCoord, focalYCoord;
+		private double focalXCoord, focalYCoord;
 		
-		public MaxHeap(int focalXCoord, int focalYCoord) {
+		public MaxHeap(double focalXCoord, double focalYCoord) {
 			this.focalXCoord = focalXCoord;
 			this.focalYCoord = focalYCoord;
 		}

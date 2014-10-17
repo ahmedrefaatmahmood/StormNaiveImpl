@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Random;
 
 import edu.cs.purdue.edu.helpers.Constants;
-
+import edu.cs.purdue.edu.helpers.RandomGenerator;
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -16,7 +16,7 @@ public class RangeQueryGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
-	private Random randomGenerator;
+	private RandomGenerator randomGenerator;
 	int i;
 	
 	
@@ -25,17 +25,17 @@ public class RangeQueryGenerator extends BaseRichSpout {
 		if( i < Constants.numQueries) { // i will be the query
 															// id.
 			i++;
-			int xMin = randomGenerator.nextInt(Constants.xMaxRange);
-			int yMin = randomGenerator.nextInt(Constants.yMaxRange);
+			Double xMin = randomGenerator.nextDouble(0,Constants.xMaxRange);
+			Double yMin = randomGenerator.nextDouble(0,Constants.yMaxRange);
 
-			int width = randomGenerator.nextInt(Constants.queryMaxWidth);
-			int xMax = xMin + width;
+			Double width = randomGenerator.nextDouble(0,Constants.queryMaxWidth);
+			Double xMax = xMin + width;
 			if (xMax > Constants.xMaxRange) {
 				xMax = Constants.xMaxRange;
 			}
 
-			int height = randomGenerator.nextInt(Constants.queryMaxHeight);
-			int yMax = yMin + height;
+			Double height = randomGenerator.nextDouble(0,Constants.queryMaxHeight);
+			Double yMax = yMin + height;
 			if (yMax > Constants.yMaxRange) {
 				yMax = Constants.yMaxRange;
 			}
@@ -55,7 +55,7 @@ public class RangeQueryGenerator extends BaseRichSpout {
 			SpoutOutputCollector collector) {
 		i=0;
 		this.collector = collector;
-		randomGenerator = new Random(Constants.generatorSeed);
+		randomGenerator = new RandomGenerator(Constants.generatorSeed);
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {

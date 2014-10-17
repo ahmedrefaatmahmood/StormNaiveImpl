@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Random;
 
 import edu.cs.purdue.edu.helpers.Constants;
-
+import edu.cs.purdue.edu.helpers.RandomGenerator;
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -16,7 +16,7 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
-	private Random randomGenerator;
+	private RandomGenerator randomGenerator;
 
 	public void ack(Object msgId) {
 		System.out.println("OK:" + msgId);
@@ -32,8 +32,8 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 	public void nextTuple() {
 	//	while (true) {
 			int id = randomGenerator.nextInt(Constants.numMovingObjects);
-			double xCoord = randomGenerator.nextInt(Constants.xMaxRange);
-			double yCoord = randomGenerator.nextInt(Constants.yMaxRange);
+			Double xCoord = randomGenerator.nextDouble(0,Constants.xMaxRange);
+			Double yCoord = randomGenerator.nextDouble(0,Constants.yMaxRange);
 			this.collector.emit(new Values(id, xCoord, yCoord));
 			try {
 				if (Constants.dataGeneratorDelay != 0)
@@ -47,7 +47,7 @@ public class ObjectLocationGenerator extends BaseRichSpout {
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
 		this.collector = collector;
-		randomGenerator = new Random(Constants.generatorSeed);
+		randomGenerator = new RandomGenerator(Constants.generatorSeed);
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {

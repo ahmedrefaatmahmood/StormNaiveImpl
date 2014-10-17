@@ -3,20 +3,20 @@ package edu.purdue.cs.generator.spout;
 import java.util.Map;
 import java.util.Random;
 
-import edu.cs.purdue.edu.helpers.Constants;
-
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import edu.cs.purdue.edu.helpers.Constants;
+import edu.cs.purdue.edu.helpers.RandomGenerator;
 
 public class KNNQueryGenerator extends BaseRichSpout {
 
 	private static final long serialVersionUID = 1L;
 	private SpoutOutputCollector collector;
-	private Random randomGenerator;
+	private RandomGenerator randomGenerator;
 	int i ;
 
 	public void ack(Object msgId) {
@@ -35,8 +35,8 @@ public class KNNQueryGenerator extends BaseRichSpout {
 		if (i < Constants.numQueries) { // i will be the query
 			// id.
 			i++;
-			int xCoord = randomGenerator.nextInt(Constants.xMaxRange);
-			int yCoord = randomGenerator.nextInt(Constants.yMaxRange);
+			Double xCoord = randomGenerator.nextDouble(0,Constants.xMaxRange);
+			Double yCoord = randomGenerator.nextDouble(0,Constants.yMaxRange);
 
 			int k = randomGenerator.nextInt(Constants.maxK) + 1; // To avoid
 																	// generating
@@ -58,7 +58,7 @@ public class KNNQueryGenerator extends BaseRichSpout {
 			SpoutOutputCollector collector) {
 		i=0;
 		this.collector = collector;
-		randomGenerator = new Random(Constants.generatorSeed);
+		randomGenerator = new RandomGenerator(Constants.generatorSeed);
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {

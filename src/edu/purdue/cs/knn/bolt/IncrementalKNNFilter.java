@@ -3,7 +3,6 @@ package edu.purdue.cs.knn.bolt;
 import java.util.ArrayList;
 import java.util.Map;
 
-
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -23,8 +22,9 @@ public class IncrementalKNNFilter extends BaseBasicBolt {
 	ArrayList<KNNQuery> queryList;
 
 	public void execute(Tuple input, BasicOutputCollector collector) {
-		if (Constants.objectLocationGenerator.equals(input.getSourceComponent())) {
-			filterData(input,collector);
+		if (Constants.objectLocationGenerator
+				.equals(input.getSourceComponent())) {
+			filterData(input, collector);
 		} else if (Constants.queryGenerator.equals(input.getSourceComponent())) {
 			addQuery(input);
 		}
@@ -36,34 +36,48 @@ public class IncrementalKNNFilter extends BaseBasicBolt {
 	}
 
 	void filterData(Tuple input, BasicOutputCollector collector) {
-		for (KNNQuery q : queryList) {
-			int objectId = input.getIntegerByField(Constants.objectIdField);
-			double objectXCoord = input.getDoubleByField(Constants.objectXCoordField);
-			double objectYCoord = input.getDoubleByField(Constants.objectYCoordField);
+		int objectId = input.getIntegerByField(Constants.objectIdField);
+		double objectXCoord = input
+				.getDoubleByField(Constants.objectXCoordField);
+		double objectYCoord = input
+				.getDoubleByField(Constants.objectYCoordField);
 
-			LocationUpdate locationUpdate = new LocationUpdate(objectId, objectXCoord, objectYCoord);
+		String changesOverall="";
+		for (KNNQuery q : queryList) {
+			
+			LocationUpdate locationUpdate = new LocationUpdate(objectId,
+					objectXCoord, objectYCoord);
 			ArrayList<String> changes = q.processLocationUpdate(locationUpdate);
-			for (String str : changes) {
-				if (str.charAt(0) == '-')
-					System.err.println(str);
-				else
-					System.out.println(str);
-			}
+			if (changes != null)
+				for (String str : changes) {
+					changesOverall=changesOverall+"("+q.getQueryID()+","+str.charAt(0)+"),";
+//					 if (str.charAt(0) == '-'){
+//					 System.err.println(str);
+//					
+//					 }else{
+//					 System.out.println(str);
+//					 collector.emit(new Values(q.getQueryID(), objectId,
+//					 objectXCoord, objectYCoord,"-"));
+//					 }
+
+				}
+		
 		}
+		collector.emit(new Values(changesOverall, objectId, objectXCoord,
+				objectYCoord));
 	}
 
 	void addQuery(Tuple input) {
-		KNNQuery query = new KNNQuery(input.getIntegerByField(Constants.queryIdField),
-				input.getIntegerByField(Constants.focalXCoordField),
-				input.getIntegerByField(Constants.focalYCoordField),
+		KNNQuery query = new KNNQuery(
+				input.getIntegerByField(Constants.queryIdField),
+				input.getDoubleByField(Constants.focalXCoordField),
+				input.getDoubleByField(Constants.focalYCoordField),
 				input.getIntegerByField(Constants.kField));
 		queryList.add(query);
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields(Constants.queryIdField,
-				Constants.objectIdField,
-				Constants.objectXCoordField,
-				Constants.objectYCoordField));
+				Constants.objectIdField, Constants.objectXCoordField));
 	}
 }

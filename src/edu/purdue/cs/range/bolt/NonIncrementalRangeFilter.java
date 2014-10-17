@@ -63,10 +63,10 @@ public class NonIncrementalRangeFilter extends BaseBasicBolt {
 	void addQuery(Tuple input) {
 		RangeQuery query = new RangeQuery(
 				input.getIntegerByField(Constants.queryIdField),
-				input.getIntegerByField(Constants.queryXMinField),
-				input.getIntegerByField(Constants.queryYMinField),
-				input.getIntegerByField(Constants.queryXMaxField),
-				input.getIntegerByField(Constants.queryXMaxField));
+				input.getDoubleByField(Constants.queryXMinField),
+				input.getDoubleByField(Constants.queryYMinField),
+				input.getDoubleByField(Constants.queryXMaxField),
+				input.getDoubleByField(Constants.queryXMaxField));
 		queryList.add(query);
 	}
 

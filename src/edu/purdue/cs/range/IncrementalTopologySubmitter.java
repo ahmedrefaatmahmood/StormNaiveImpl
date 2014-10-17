@@ -20,7 +20,8 @@ public class IncrementalTopologySubmitter {
 	public static void main(String[] args) throws Exception {
          
 		TopologyBuilder builder = new TopologyBuilder();
-		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator(),Constants.dataSpoutParallelism);
+	
+		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator(),Constants.dataSpoutExecuters).setNumTasks(Constants.dataSpoutParallelism);
 		builder.setSpout(Constants.queryGenerator, new RangeQueryGenerator(),Constants.querySpoutParallelism);
 		builder.setBolt(Constants.rangeFilterBolt,
 							  new IncrementalRangeFilter(),Constants.boltParallelism).allGrouping(Constants.queryGenerator).shuffleGrouping(Constants.objectLocationGenerator);

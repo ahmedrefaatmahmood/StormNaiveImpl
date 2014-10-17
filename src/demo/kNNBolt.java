@@ -53,10 +53,10 @@ public class kNNBolt extends BaseBasicBolt {
 	@Override
 	public void prepare(Map stormConf, TopologyContext context) {
 		queryList = new ArrayList<KNNQuery>();
-		KNNQuery q1 = new KNNQuery(0, 14000, 14000, 20);
+		KNNQuery q1 = new KNNQuery(0, 14000.0, 14000.0, 2);
 		queryList.add(q1);
 		
-		KNNQuery q2 = new KNNQuery(0, 1000, 6500, 20);
+		KNNQuery q2 = new KNNQuery(0, 1000.0, 6500.0, 2);
 		queryList.add(q2);
 
 		try {

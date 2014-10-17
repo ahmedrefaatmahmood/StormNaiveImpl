@@ -15,9 +15,10 @@ public class IncrementalTopology {
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout(Constants.objectLocationGenerator, new ObjectLocationGenerator());
-		builder.setSpout(Constants.queryGenerator, new KNNQueryGenerator());
+		builder.setSpout(Constants.queryGenerator, new KNNQueryGenerator(),Constants.querySpoutParallelism);
 		builder.setBolt(Constants.kNNFilterBolt,
-							  new IncrementalKNNFilter()).allGrouping(Constants.queryGenerator).shuffleGrouping(Constants.objectLocationGenerator);
+							  new IncrementalKNNFilter(),Constants.boltParallelism).allGrouping(Constants.queryGenerator).shuffleGrouping(Constants.objectLocationGenerator);
+		
 		
         //Configuration
 		Config conf = new Config();
@@ -28,7 +29,7 @@ public class IncrementalTopology {
 
 		LocalCluster cluster = new LocalCluster();
 		cluster.submitTopology("Incremental-kNN-Queries-Toplogy", conf, builder.createTopology());
-		while(true)
-			Thread.sleep(1000);		
+//		while(true)
+//			Thread.sleep(1000);		
 	}
 }

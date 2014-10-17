@@ -6,7 +6,7 @@ import edu.cs.purdue.edu.helpers.LocationUpdate;
 
 public class RangeQuery {
 	private int queryID; 
-	private int xMin, yMin, xMax, yMax;
+	private double xMin, yMin, xMax, yMax;
 	
 	private HashSet<Integer> currentObjects; 
 	
@@ -30,7 +30,7 @@ public class RangeQuery {
 		this.queryID = id;
 	}
 	
-	public int getXMin() {
+	public double getXMin() {
 		return xMin;
 	}
 	
@@ -38,7 +38,7 @@ public class RangeQuery {
 		this.xMin = xMin;
 	}
 	
-	public int getYMin() {
+	public double getYMin() {
 		return yMin;
 	}
 	
@@ -46,7 +46,7 @@ public class RangeQuery {
 		this.yMin = yMin;
 	}
 	
-	public int getXMax() {
+	public double getXMax() {
 		return xMax;
 	}
 	
@@ -54,7 +54,7 @@ public class RangeQuery {
 		this.xMax = xMax;
 	}
 	
-	public int getYMax() {
+	public double getYMax() {
 		return yMax;
 	}
 	
@@ -62,7 +62,7 @@ public class RangeQuery {
 		this.yMax = yMax;
 	}
 	
-	public RangeQuery(int id, int xMin, int yMin, int xMax, int yMax) {
+	public RangeQuery(int id, double xMin, double yMin, double xMax, double yMax) {
 		this.currentObjects = new HashSet<Integer>();
 		
 		this.queryID = id;

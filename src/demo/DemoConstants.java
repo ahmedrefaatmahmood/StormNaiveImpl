@@ -7,5 +7,6 @@ public class DemoConstants {
 	
 	public static final String BerlinReader = "berlin-reader";
 	
-	public static final String dataPath = "//Users/ahmed//Documents//MyWork//data//BerlinMod//trips.1000.dat";
+	//public static final String dataPath = "//Users/ahmed//Documents//MyWork//data//BerlinMod//trips.1000.dat";
+	public static final String dataPath = "/media/New Volume/trips.1000.dat";
 }

@@ -17,19 +17,19 @@ public class DataStaticGridCustomGrouping implements CustomStreamGrouping {
 	 */
 
 	Integer numberOfPartitions;
-	Integer xrange;
-	Integer yrange;
-	Integer xStep;
-	Integer yStep;
+	Double xrange;
+	Double yrange;
+	Double xStep;
+	Double yStep;
 	Integer xCellsNum;
 	Integer yCellsNum;
 	List<Integer> _targets; // this is the list of target bolt tasks
 	WorkerTopologyContext context;
 
-	public int mapToPartition(Integer x, Integer y) {
+	public int mapToPartition(Double x, Double y) {
 		Integer xCell = (int) (x / xStep);
 		Integer yCell = (int) (y / yStep);
-		int partitionNum = xCell * yCellsNum + yCell;
+		Integer partitionNum = xCell * yCellsNum + yCell;
 		if (partitionNum >= _targets.size()) {
 			System.out.println("error in data " + x + " , " + y + "  index is "
 					+ partitionNum + " while partitions " + _targets.size());
@@ -41,8 +41,8 @@ public class DataStaticGridCustomGrouping implements CustomStreamGrouping {
 		}
 	}
 
-	public DataStaticGridCustomGrouping(int numberOfPartitions, Integer xrange,
-			Integer yrange, Integer xCellsNum, Integer yCellsNum) {
+	public DataStaticGridCustomGrouping(Integer numberOfPartitions, Double xrange,
+			Double yrange, Integer xCellsNum, Integer yCellsNum) {
 		this.numberOfPartitions = numberOfPartitions;
 		this.xrange = xrange;
 		this.yrange = yrange;
@@ -59,7 +59,7 @@ public class DataStaticGridCustomGrouping implements CustomStreamGrouping {
 	}
 
 	public List<Integer> chooseTasks(int fromTask, List<Object> values) {
-		int i = mapToPartition((Integer) values.get(1), (Integer) values.get(2));
+		int i = mapToPartition((Double) values.get(1), (Double) values.get(2));
 		return Arrays.asList(_targets.get(i));
 	}
 }

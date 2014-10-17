@@ -10,23 +10,23 @@ import backtype.storm.task.WorkerTopologyContext;
 public class QueryStaticGridCustomGrouping implements CustomStreamGrouping {
 
 	Integer numberOfPartitions;
-	Integer  xrange;
-	Integer  yrange;
-	Integer  xStep;
-	Integer  yStep;
+	Double  xrange;
+	Double  yrange;
+	Double  xStep;
+	Double  yStep;
 	Integer xCellsNum;
 	Integer yCellsNum;
 	List<Integer> _targets; // this is the list of target bolt tasks
 	WorkerTopologyContext context;
 
-	public List<Integer> mapToPartitions(Integer  xmin, Integer  ymin, Integer  xmax,
-			Integer  ymax) {
+	public List<Integer> mapToPartitions(double  xmin, double  ymin, double  xmax,
+			double  ymax) {
 
 		ArrayList<Integer> partitions = new ArrayList<Integer>();
-		Integer xMinCell = (Integer) (xmin / xStep);
-		Integer yMinCell = (Integer) (ymin / yStep);
-		Integer xMaxCell = (Integer) (xmax / xStep);
-		Integer yMaxCell = (Integer) (ymax / yStep);
+		int xMinCell = (int) (xmin / xStep);
+		int yMinCell = (int) (ymin / yStep);
+		int xMaxCell = (int) (xmax / xStep);
+		int yMaxCell = (int) (ymax / yStep);
 		for (Integer xCell = xMinCell; xCell <= xMaxCell; xCell++)
 			for (Integer yCell = yMinCell; yCell <= yMaxCell; yCell++) {
 				Integer partitionNum = xCell * yCellsNum + yCell;
@@ -46,8 +46,8 @@ public class QueryStaticGridCustomGrouping implements CustomStreamGrouping {
 		return partitions;
 	}
 
-	public QueryStaticGridCustomGrouping(Integer numberOfPartitions, Integer  xrange,
-			Integer  yrange, Integer xCellsNum, Integer yCellsNum) {
+	public QueryStaticGridCustomGrouping(Integer numberOfPartitions, Double  xrange,
+			Double  yrange, Integer xCellsNum, Integer yCellsNum) {
 		this.numberOfPartitions = numberOfPartitions;
 		this.xrange = xrange;
 		this.yrange = yrange;
@@ -64,8 +64,8 @@ public class QueryStaticGridCustomGrouping implements CustomStreamGrouping {
 	}
 	@Override
 	public List<Integer> chooseTasks(int fromTask, List<Object> values) {
-		return mapToPartitions((Integer ) values.get(1), (Integer ) values.get(2),
-				(Integer ) values.get(3), (Integer ) values.get(4));
+		return mapToPartitions((Double ) values.get(1), (Double ) values.get(2),
+				(Double ) values.get(3), (Double ) values.get(4));
 
 	}
 

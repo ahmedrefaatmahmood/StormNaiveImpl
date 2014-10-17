@@ -11,9 +11,9 @@ import backtype.storm.topology.TopologyBuilder;
 public class kNNTopology {
 	public static void main(String[] args) throws InterruptedException {
 		TopologyBuilder builder = new TopologyBuilder();
-		builder.setSpout("berlin-reader-spout", new BerlinReaderSpout());
+		builder.setSpout("berlin-reader-spout", new BerlinReaderSpout(),1);
 		builder.setBolt(Constants.kNNFilterBolt,
-							  new kNNBolt()).shuffleGrouping("berlin-reader-spout");
+							  new kNNBolt(),1).shuffleGrouping("berlin-reader-spout");
 		
         //Configuration
 		Config conf = new Config();
