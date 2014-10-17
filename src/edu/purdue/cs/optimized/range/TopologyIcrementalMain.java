@@ -1,4 +1,4 @@
-package edu.purdue.cs.optimizedrange;
+package edu.purdue.cs.optimized.range;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -6,8 +6,8 @@ import backtype.storm.topology.TopologyBuilder;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
-import edu.purdue.cs.optimizedrange.grouping.DataStaticGridCustomGrouping;
-import edu.purdue.cs.optimizedrange.grouping.QueryStaticGridCustomGrouping;
+import edu.purdue.cs.optimized.range.grouping.DataStaticGridCustomGrouping;
+import edu.purdue.cs.optimized.range.grouping.QueryStaticGridCustomGrouping;
 import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
 
 public class TopologyIcrementalMain {

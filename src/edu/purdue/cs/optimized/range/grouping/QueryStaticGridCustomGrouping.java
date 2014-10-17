@@ -1,4 +1,4 @@
-package edu.purdue.cs.optimizedrange.grouping;
+package edu.purdue.cs.optimized.range.grouping;
 
 import java.util.ArrayList;
 import java.util.List;
