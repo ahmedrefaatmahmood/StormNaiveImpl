@@ -2,7 +2,6 @@ package demo;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -18,8 +17,8 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.cs.purdue.edu.helpers.LocationUpdate;
-import edu.purdue.cs.knn.KNNQuery;
-import edu.purdue.cs.range.RangeQuery;
+import edu.purdue.cs.baseline.knn.KNNQuery;
+import edu.purdue.cs.baseline.range.RangeQuery;
 
 public class RQBolt extends BaseBasicBolt {
 

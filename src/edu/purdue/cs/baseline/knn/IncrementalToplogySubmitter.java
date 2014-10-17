@@ -1,13 +1,13 @@
-package edu.purdue.cs.knn;
+package edu.purdue.cs.baseline.knn;
 
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.cs.purdue.edu.helpers.KillTopology;
+import edu.purdue.cs.baseline.knn.bolt.IncrementalKNNFilter;
 import edu.purdue.cs.generator.spout.KNNQueryGenerator;
 import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
-import edu.purdue.cs.knn.bolt.IncrementalKNNFilter;
 import edu.purdue.cs.performance.ClusterInformationExtractor;
 
 public class IncrementalToplogySubmitter {

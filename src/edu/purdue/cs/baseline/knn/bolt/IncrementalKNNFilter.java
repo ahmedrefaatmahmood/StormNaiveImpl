@@ -1,4 +1,4 @@
-package edu.purdue.cs.knn.bolt;
+package edu.purdue.cs.baseline.knn.bolt;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -12,7 +12,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.cs.purdue.edu.helpers.LocationUpdate;
-import edu.purdue.cs.knn.KNNQuery;
+import edu.purdue.cs.baseline.knn.KNNQuery;
 
 public class IncrementalKNNFilter extends BaseBasicBolt {
 

@@ -1,4 +1,4 @@
-package edu.purdue.cs.knn;
+package edu.purdue.cs.baseline.knn;
 
 import java.util.ArrayList;
 import java.util.Comparator;

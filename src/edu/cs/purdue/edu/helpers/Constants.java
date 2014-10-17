@@ -2,7 +2,7 @@ package edu.cs.purdue.edu.helpers;
 
 public class Constants {
 	public static final Integer generatorSeed = 1000;
-	public static final Integer dataGeneratorDelay = 0; // setting this to zero to
+	public static final Integer dataGeneratorDelay = 10; // setting this to zero to
 													// achieve the highest data
 													// rate possible
 	public static final Integer queryGeneratorDelay = 0; // setting this to zero to
@@ -27,6 +27,7 @@ public class Constants {
 	public static final String objectYCoordField = "yCoord";
 	public static final String objectTextField = "textContent";
 	public static final String incrementalState = "incrementalState";
+	public static final String timeStamp = "timeStamp";
 
 	public static final String queryIdField = "queryID";
 

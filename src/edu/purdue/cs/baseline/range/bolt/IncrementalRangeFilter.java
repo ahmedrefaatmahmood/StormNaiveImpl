@@ -1,4 +1,4 @@
-package edu.purdue.cs.range.bolt;
+package edu.purdue.cs.baseline.range.bolt;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -12,7 +12,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.cs.purdue.edu.helpers.LocationUpdate;
-import edu.purdue.cs.range.RangeQuery;
+import edu.purdue.cs.baseline.range.RangeQuery;
 
 public class IncrementalRangeFilter extends BaseBasicBolt {
 

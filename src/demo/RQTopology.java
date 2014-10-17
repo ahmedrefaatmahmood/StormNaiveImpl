@@ -1,9 +1,9 @@
 package demo;
 
 import edu.cs.purdue.edu.helpers.Constants;
+import edu.purdue.cs.baseline.range.bolt.IncrementalRangeFilter;
 import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
-import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;

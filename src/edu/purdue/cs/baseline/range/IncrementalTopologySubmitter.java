@@ -1,15 +1,15 @@
-package edu.purdue.cs.range;
+package edu.purdue.cs.baseline.range;
 
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import edu.cs.purdue.edu.helpers.Constants;
 import edu.cs.purdue.edu.helpers.KillTopology;
+import edu.purdue.cs.baseline.range.bolt.IncrementalRangeFilter;
+import edu.purdue.cs.baseline.range.bolt.NonIncrementalRangeFilter;
 import edu.purdue.cs.generator.spout.ObjectLocationGenerator;
 import edu.purdue.cs.generator.spout.RangeQueryGenerator;
 import edu.purdue.cs.performance.ClusterInformationExtractor;
-import edu.purdue.cs.range.bolt.IncrementalRangeFilter;
-import edu.purdue.cs.range.bolt.NonIncrementalRangeFilter;
 
 public class IncrementalTopologySubmitter {
 
